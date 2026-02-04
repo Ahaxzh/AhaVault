@@ -249,6 +249,44 @@ DELETE FROM file_blobs WHERE ref_count = 0;
 
 #### 后端 (Go)
 
+**文件注释头规范** ⭐:
+
+每个 Go 源文件必须包含规范的文件头注释：
+
+```go
+// Package handlers 提供 HTTP 请求处理器
+//
+// 本包实现了所有 RESTful API 端点的业务逻辑处理，包括：
+//   - 文件上传/下载/删除
+//   - 分享链接的创建与访问
+//   - 用户认证与授权
+//
+// 作者: AhaVault Team
+// 创建时间: 2026-02-04
+package handlers
+
+// UploadFile 处理文件上传请求
+//
+// 该函数实现文件上传的完整流程：
+//  1. 验证用户存储配额
+//  2. 计算文件 SHA-256 哈希
+//  3. 检查是否可以秒传
+//  4. 执行信封加密
+//  5. 存储到 CAS 层并更新引用计数
+//
+// 参数:
+//   - c: Gin 上下文对象
+//
+// 返回:
+//   - 200: 上传成功，返回文件元数据
+//   - 400: 请求参数错误
+//   - 413: 文件超过大小限制
+//   - 507: 用户配额不足
+func UploadFile(c *gin.Context) {
+    // ...
+}
+```
+
 **格式化与检查**:
 - 使用 `gofmt` 或 `goimports` 格式化代码
 - 使用 `golangci-lint` 进行静态检查
@@ -257,6 +295,84 @@ DELETE FROM file_blobs WHERE ref_count = 0;
 - 包名: 小写单词，无下划线 (`crypto`, `storage`, `middleware`)
 - 导出符号: 大驼峰 (`EncryptDEK`, `FileService`)
 - 私有符号: 小驼峰 (`validateHash`, `generateCode`)
+
+**测试代码要求** ⭐:
+
+每个 Go 源文件必须有对应的测试文件：
+
+```
+server/internal/
+├── crypto/
+│   ├── envelope.go
+│   ├── envelope_test.go      # 必需
+│   ├── hash.go
+│   └── hash_test.go          # 必需
+├── storage/
+│   ├── local.go
+│   ├── local_test.go         # 必需
+│   ├── s3.go
+│   └── s3_test.go            # 必需
+└── services/
+    ├── file_service.go
+    └── file_service_test.go  # 必需
+```
+
+**测试覆盖率要求**:
+- 核心模块 (crypto, storage): ≥80%
+- 业务逻辑 (services): ≥70%
+- API 层 (handlers): ≥60%
+
+**测试示例**:
+```go
+// envelope_test.go
+package crypto
+
+import (
+    "testing"
+    "github.com/stretchr/testify/assert"
+    "github.com/stretchr/testify/require"
+)
+
+// TestEncryptDEK 测试 DEK 加密功能
+//
+// 测试场景：
+//  1. 正常加密流程
+//  2. 无效 KEK 长度
+//  3. 空 DEK 输入
+func TestEncryptDEK(t *testing.T) {
+    tests := []struct {
+        name    string
+        dek     []byte
+        kek     []byte
+        wantErr bool
+    }{
+        {
+            name:    "valid encryption",
+            dek:     []byte("data-key-12345678901234567890123"),
+            kek:     []byte("master-key-1234567890123456789012"),
+            wantErr: false,
+        },
+        {
+            name:    "invalid kek length",
+            dek:     []byte("data-key"),
+            kek:     []byte("short"),
+            wantErr: true,
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            encrypted, err := EncryptDEK(tt.dek, tt.kek)
+            if tt.wantErr {
+                require.Error(t, err)
+                return
+            }
+            require.NoError(t, err)
+            assert.NotEmpty(t, encrypted)
+        })
+    }
+}
+```
 
 **错误处理**:
 ```go
@@ -288,6 +404,63 @@ tx.Commit()
 
 #### 前端 (React + TypeScript)
 
+**文件注释头规范** ⭐:
+
+每个 TypeScript/TSX 文件必须包含规范的文件头注释：
+
+```tsx
+/**
+ * @file UploadButton.tsx
+ * @description 文件上传按钮组件
+ *
+ * 功能说明：
+ *  - 支持拖拽上传
+ *  - 实时显示上传进度
+ *  - 支持断点续传
+ *  - 自动秒传检测
+ *
+ * @author AhaVault Team
+ * @created 2026-02-04
+ */
+
+import React, { useState } from 'react';
+import { useFileUpload } from '@/hooks/useFileUpload';
+
+/**
+ * UploadButton 组件属性
+ */
+interface UploadButtonProps {
+  /** 上传成功回调 */
+  onSuccess?: (fileId: string) => void;
+  /** 上传失败回调 */
+  onError?: (error: Error) => void;
+  /** 是否禁用 */
+  disabled?: boolean;
+}
+
+/**
+ * UploadButton 文件上传按钮组件
+ *
+ * @param props - 组件属性
+ * @returns React 组件
+ *
+ * @example
+ * ```tsx
+ * <UploadButton
+ *   onSuccess={(id) => console.log('Uploaded:', id)}
+ *   onError={(err) => console.error(err)}
+ * />
+ * ```
+ */
+export const UploadButton: React.FC<UploadButtonProps> = ({
+  onSuccess,
+  onError,
+  disabled = false,
+}) => {
+  // ...
+};
+```
+
 **格式化与检查**:
 - 使用 Prettier 格式化代码
 - 使用 ESLint 进行静态检查
@@ -297,6 +470,173 @@ tx.Commit()
 - 变量/函数: 小驼峰 (`handleUpload`, `isUploading`)
 - 常量: 大写下划线 (`MAX_FILE_SIZE`, `API_BASE_URL`)
 - 类型/接口: 大驼峰 (`FileMetadata`, `ShareConfig`)
+
+**测试代码要求** ⭐:
+
+每个组件必须有对应的单元测试（Vitest）和 E2E 测试（Playwright）：
+
+```
+web/src/
+├── components/
+│   ├── upload/
+│   │   ├── UploadButton.tsx
+│   │   └── UploadButton.test.tsx     # Vitest 单元测试 - 必需
+│   ├── share/
+│   │   ├── ShareModal.tsx
+│   │   └── ShareModal.test.tsx       # Vitest 单元测试 - 必需
+├── hooks/
+│   ├── useFileUpload.ts
+│   └── useFileUpload.test.ts         # Vitest 单元测试 - 必需
+├── utils/
+│   ├── crypto.ts
+│   └── crypto.test.ts                # Vitest 单元测试 - 必需
+└── e2e/                              # Playwright E2E 测试
+    ├── upload.spec.ts                # 上传流程测试 - 必需
+    ├── share.spec.ts                 # 分享流程测试 - 必需
+    └── auth.spec.ts                  # 认证流程测试 - 必需
+```
+
+**测试覆盖率要求**:
+- 组件 (components): ≥70%
+- 工具函数 (utils): ≥80%
+- Hooks: ≥75%
+- E2E 测试: 覆盖所有核心用户流程
+
+**Vitest 单元测试示例**:
+```tsx
+/**
+ * @file UploadButton.test.tsx
+ * @description UploadButton 组件单元测试
+ */
+
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { UploadButton } from './UploadButton';
+
+describe('UploadButton', () => {
+  /**
+   * 测试基本渲染
+   */
+  it('should render upload button', () => {
+    render(<UploadButton />);
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
+
+  /**
+   * 测试文件选择
+   */
+  it('should trigger file selection on click', async () => {
+    const onSuccess = vi.fn();
+    render(<UploadButton onSuccess={onSuccess} />);
+
+    const button = screen.getByRole('button');
+    const file = new File(['content'], 'test.txt', { type: 'text/plain' });
+
+    const input = button.querySelector('input[type="file"]');
+    fireEvent.change(input!, { target: { files: [file] } });
+
+    await waitFor(() => {
+      expect(onSuccess).toHaveBeenCalled();
+    });
+  });
+
+  /**
+   * 测试禁用状态
+   */
+  it('should be disabled when disabled prop is true', () => {
+    render(<UploadButton disabled />);
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
+});
+```
+
+**Playwright E2E 测试示例**:
+```typescript
+/**
+ * @file upload.spec.ts
+ * @description 文件上传 E2E 测试
+ */
+
+import { test, expect } from '@playwright/test';
+
+/**
+ * 文件上传流程测试套件
+ */
+test.describe('File Upload Flow', () => {
+  /**
+   * 测试前准备：登录用户
+   */
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    await page.fill('input[name="email"]', 'test@example.com');
+    await page.fill('input[name="password"]', 'password123');
+    await page.click('button[type="submit"]');
+    await expect(page).toHaveURL(/.*cabinet/);
+  });
+
+  /**
+   * 测试普通文件上传
+   */
+  test('should upload a file successfully', async ({ page }) => {
+    // 点击上传按钮
+    await page.click('button:has-text("上传文件")');
+
+    // 选择文件
+    const fileInput = await page.locator('input[type="file"]');
+    await fileInput.setInputFiles('tests/fixtures/test.pdf');
+
+    // 等待上传完成
+    await expect(page.locator('.upload-success')).toBeVisible({ timeout: 10000 });
+
+    // 验证文件出现在列表中
+    await expect(page.locator('text=test.pdf')).toBeVisible();
+  });
+
+  /**
+   * 测试秒传功能
+   */
+  test('should skip upload for duplicate file (instant upload)', async ({ page }) => {
+    // 首次上传
+    await page.setInputFiles('input[type="file"]', 'tests/fixtures/test.pdf');
+    await expect(page.locator('.upload-success')).toBeVisible();
+
+    // 删除文件
+    await page.click('button[aria-label="删除文件"]');
+
+    // 再次上传相同文件（应该秒传）
+    await page.setInputFiles('input[type="file"]', 'tests/fixtures/test.pdf');
+
+    // 验证秒传提示
+    await expect(page.locator('text=秒传成功')).toBeVisible();
+  });
+
+  /**
+   * 测试大文件上传进度显示
+   */
+  test('should show progress for large file upload', async ({ page }) => {
+    await page.setInputFiles('input[type="file"]', 'tests/fixtures/large.zip');
+
+    // 验证进度条出现
+    await expect(page.locator('.progress-bar')).toBeVisible();
+
+    // 验证进度百分比更新
+    await expect(page.locator('.progress-text')).toContainText('%');
+  });
+});
+```
+
+**测试运行命令**:
+```bash
+# Vitest 单元测试
+npm run test              # 运行所有单元测试
+npm run test:ui           # 交互式 UI 模式
+npm run test:coverage     # 生成覆盖率报告
+
+# Playwright E2E 测试
+npm run test:e2e          # 运行所有 E2E 测试
+npm run test:e2e:ui       # 交互式 UI 模式
+npm run test:e2e:debug    # 调试模式
+```
 
 **TypeScript 最佳实践**:
 ```tsx
