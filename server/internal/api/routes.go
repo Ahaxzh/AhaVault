@@ -14,19 +14,20 @@ func SetupRoutes(
 	fileService *services.FileService,
 	shareService *services.ShareService,
 ) {
-	// 创建处理器
+	// Create handlers
 	authHandler := handlers.NewAuthHandler(userService)
 	fileHandler := handlers.NewFileHandler(fileService)
 	shareHandler := handlers.NewShareHandler(shareService)
+	downloadHandler := handlers.NewDownloadHandler(shareService, fileService)
 
-	// 应用全局中间件
+	// Apply global middleware
 	router.Use(middleware.CORS())
 	router.Use(middleware.ErrorHandler())
 
-	// API 路由组
+	// API Routes Group
 	api := router.Group("/api")
 	{
-		// 认证路由（无需认证）
+		// Auth routes (public)
 		auth := api.Group("/auth")
 		{
 			auth.POST("/register", authHandler.Register)
@@ -34,10 +35,11 @@ func SetupRoutes(
 			auth.POST("/logout", authHandler.Logout)
 		}
 
-		// 公开分享路由（无需认证）
+		// Public share routes (public)
 		public := api.Group("/public")
 		{
 			public.POST("/shares/:code", shareHandler.GetShareByCode)
+			public.GET("/download/:code", downloadHandler.DownloadByPickupCode)
 		}
 
 		// 需要认证的路由

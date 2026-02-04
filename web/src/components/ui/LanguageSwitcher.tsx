@@ -13,13 +13,13 @@ export function LanguageSwitcher() {
     return (
         <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             onClick={toggleLanguage}
             title="Switch language"
+            className="w-12 px-0"
         >
-            <Languages className="h-[1.2rem] w-[1.2rem]" />
-            <span className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-primary text-[8px] text-primary-foreground">
-                {i18n.language === "zh" ? "中" : "En"}
+            <span className="font-bold text-xs">
+                {i18n.language === "zh" ? "中" : "EN"}
             </span>
         </Button>
     )
