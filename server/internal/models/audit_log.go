@@ -40,29 +40,29 @@ func (al *AuditLog) BeforeCreate(tx *gorm.DB) error {
 
 // 审计日志动作常量
 const (
-	ActionLogin            = "login"
-	ActionLogout           = "logout"
-	ActionRegister         = "register"
-	ActionUploadFile       = "upload_file"
-	ActionDownloadFile     = "download_file"
-	ActionDeleteFile       = "delete_file"
-	ActionRenameFile       = "rename_file"
-	ActionCreateShare      = "create_share"
-	ActionAccessShare      = "access_share"
-	ActionStopShare        = "stop_share"
-	ActionSaveToVault      = "save_to_vault"
-	ActionBanFile          = "ban_file"
-	ActionUnbanFile        = "unban_file"
-	ActionDisableUser      = "disable_user"
-	ActionEnableUser       = "enable_user"
-	ActionUpdateSettings   = "update_settings"
+	ActionLogin          = "login"
+	ActionLogout         = "logout"
+	ActionRegister       = "register"
+	ActionUploadFile     = "upload_file"
+	ActionDownloadFile   = "download_file"
+	ActionDeleteFile     = "delete_file"
+	ActionRenameFile     = "rename_file"
+	ActionCreateShare    = "create_share"
+	ActionAccessShare    = "access_share"
+	ActionStopShare      = "stop_share"
+	ActionSaveToVault    = "save_to_vault"
+	ActionBanFile        = "ban_file"
+	ActionUnbanFile      = "unban_file"
+	ActionDisableUser    = "disable_user"
+	ActionEnableUser     = "enable_user"
+	ActionUpdateSettings = "update_settings"
 )
 
 // 资源类型常量
 const (
-	ResourceTypeUser    = "user"
-	ResourceTypeFile    = "file"
-	ResourceTypeShare   = "share"
+	ResourceTypeUser     = "user"
+	ResourceTypeFile     = "file"
+	ResourceTypeShare    = "share"
 	ResourceTypeSettings = "settings"
 )
 

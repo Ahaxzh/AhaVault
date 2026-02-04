@@ -134,7 +134,7 @@ func (e *LocalEngine) Delete(hash string) error {
 
 	// 尝试删除空目录（忽略错误）
 	dir := filepath.Dir(fullPath)
-	os.Remove(dir) // 二级目录
+	os.Remove(dir)               // 二级目录
 	os.Remove(filepath.Dir(dir)) // 一级目录
 
 	return nil

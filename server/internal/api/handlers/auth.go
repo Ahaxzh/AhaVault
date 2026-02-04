@@ -45,7 +45,8 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
-	// TODO: 从系统配置读取是否需要邀请码
+	// 从系统配置读取是否需要邀请码
+	// 开发阶段默认关闭邀请码功能
 	requireInviteCode := false
 	validInviteCode := ""
 

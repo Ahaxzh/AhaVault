@@ -15,8 +15,8 @@ type ShareSession struct {
 	CreatorID  uuid.UUID `gorm:"type:uuid;not null;index" json:"creator_id"`
 
 	// 访问控制
-	PasswordHash    string `gorm:"type:varchar(255)" json:"-"` // 密码哈希，不返回到前端
-	MaxDownloads    int    `gorm:"type:int;not null;default:0" json:"max_downloads"`
+	PasswordHash     string `gorm:"type:varchar(255)" json:"-"` // 密码哈希，不返回到前端
+	MaxDownloads     int    `gorm:"type:int;not null;default:0" json:"max_downloads"`
 	CurrentDownloads int    `gorm:"type:int;not null;default:0" json:"current_downloads"`
 
 	// 生命周期

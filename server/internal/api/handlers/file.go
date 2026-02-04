@@ -285,9 +285,9 @@ func (h *FileHandler) ListFiles(c *gin.Context) {
 		"code":    0,
 		"message": "Success",
 		"data": gin.H{
-			"files": files,
-			"total": total,
-			"page":  page,
+			"files":     files,
+			"total":     total,
+			"page":      page,
 			"page_size": pageSize,
 		},
 	})

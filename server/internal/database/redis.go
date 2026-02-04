@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-redis/redis/v8"
 	"ahavault/server/internal/config"
+	"github.com/go-redis/redis/v8"
 )
 
 // RedisClient 全局 Redis 客户端
@@ -64,9 +64,9 @@ func GetRedis() *redis.Client {
 
 // RedisStats Redis 连接池统计信息
 type RedisStats struct {
-	Hits     uint32 // 命中次数
-	Misses   uint32 // 未命中次数
-	Timeouts uint32 // 超时次数
+	Hits       uint32 // 命中次数
+	Misses     uint32 // 未命中次数
+	Timeouts   uint32 // 超时次数
 	TotalConns uint32 // 总连接数
 	IdleConns  uint32 // 空闲连接数
 	StaleConns uint32 // 过期连接数

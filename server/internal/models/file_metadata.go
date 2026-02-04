@@ -23,8 +23,8 @@ type FileMetadata struct {
 	DeletedAt *time.Time `gorm:"default:null;index:idx_user_files" json:"deleted_at,omitempty"` // 软删除
 
 	// 关联关系
-	User     User     `gorm:"foreignKey:UserID" json:"-"`
-	FileBlob FileBlob `gorm:"foreignKey:FileBlobHash;references:Hash" json:"-"`
+	User       User        `gorm:"foreignKey:UserID" json:"-"`
+	FileBlob   FileBlob    `gorm:"foreignKey:FileBlobHash;references:Hash" json:"-"`
 	ShareFiles []ShareFile `gorm:"foreignKey:FileID" json:"-"`
 }
 

@@ -25,8 +25,8 @@ type User struct {
 	LastLoginAt *time.Time `gorm:"default:null" json:"last_login_at,omitempty"`
 
 	// 关联关系
-	Files         []FileMetadata  `gorm:"foreignKey:UserID" json:"-"`
-	ShareSessions []ShareSession  `gorm:"foreignKey:CreatorID" json:"-"`
+	Files          []FileMetadata  `gorm:"foreignKey:UserID" json:"-"`
+	ShareSessions  []ShareSession  `gorm:"foreignKey:CreatorID" json:"-"`
 	UploadSessions []UploadSession `gorm:"foreignKey:UserID" json:"-"`
 }
 

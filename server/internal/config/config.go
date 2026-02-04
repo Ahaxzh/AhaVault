@@ -37,11 +37,11 @@ type Config struct {
 
 // AppConfig 应用配置
 type AppConfig struct {
-	Env         string // 环境：dev, staging, production
-	Debug       bool   // 调试模式
-	LogLevel    string // 日志级别：debug, info, warn, error
-	InviteCode  string // 邀请码
-	Version     string // 应用版本
+	Env        string // 环境：dev, staging, production
+	Debug      bool   // 调试模式
+	LogLevel   string // 日志级别：debug, info, warn, error
+	InviteCode string // 邀请码
+	Version    string // 应用版本
 }
 
 // DatabaseConfig 数据库配置
