@@ -739,7 +739,7 @@ npm run test:coverage
 
 **步骤 4: 更新"更新日志"**
 
-在 `DEVELOPMENT.md` 底部的"更新日志"章节添加本次更新：
+在 `docs/memory-bank/progress.md` 底部的"最近更新"章节添加本次更新：
 
 ```markdown
 ### 2026-02-05 10:30
@@ -752,7 +752,7 @@ npm run test:coverage
 **步骤 5: 提交文档更新**
 
 ```bash
-git add DEVELOPMENT.md
+git add docs/
 git commit -m "docs: update development progress for upload/download handlers
 
 - Mark upload.go and download.go as completed
