@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { fileService, FileItem } from '@/services/fileService'
-import { Loader2, Search, Plus, Trash2, File as FileIcon, MoreVertical, Download, Share2 } from 'lucide-react'
-import { api } from '@/services/api'
+import { fileService, type FileItem } from '@/services/fileService'
+import { Loader2, Search, Trash2, File as FileIcon, Download, Share2 } from 'lucide-react'
+import { UploadButton } from '@/components/upload/UploadButton'
 
 export default function Cabinet() {
     const [files, setFiles] = useState<FileItem[]>([])
@@ -66,9 +66,7 @@ export default function Cabinet() {
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>
-                        <Button onClick={() => alert("Upload logic to be implemented")}>
-                            <Plus className="mr-2 h-4 w-4" /> Upload
-                        </Button>
+                        <UploadButton onUploadComplete={fetchFiles} />
                     </div>
                 </div>
 
@@ -83,7 +81,9 @@ export default function Cabinet() {
                             <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
                                 <FileIcon className="h-12 w-12 mb-4 opacity-50" />
                                 <p>No files found</p>
-                                <Button variant="link" onClick={() => alert("Upload logic needed")}>Upload your first file</Button>
+                                <div className="mt-4">
+                                    <UploadButton onUploadComplete={fetchFiles} />
+                                </div>
                             </div>
                         ) : (
                             <div className="divide-y divide-border/50">
