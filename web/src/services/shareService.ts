@@ -22,6 +22,23 @@ export interface GetShareResponse {
     data: ShareInfo;
 }
 
+export interface CreateShareRequest {
+    file_ids: string[];
+    expires_in: number; // in seconds
+    max_downloads: number;
+    password?: string;
+}
+
+export interface CreateShareResponse {
+    code: number;
+    message: string;
+    data: {
+        share_id: string;
+        pickup_code: string;
+        expires_at: string;
+    };
+}
+
 export const shareService = {
     /**
      * Get share info by pickup code
@@ -36,5 +53,12 @@ export const shareService = {
             password,
             captcha_token: captchaToken
         });
+    },
+
+    /**
+     * Create a new share
+     */
+    createShare: async (data: CreateShareRequest) => {
+        return api.post<any, CreateShareResponse>('/shares', data);
     }
 };

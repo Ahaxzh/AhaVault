@@ -6,11 +6,13 @@ import { Input } from '@/components/ui/Input'
 import { fileService, type FileItem } from '@/services/fileService'
 import { Loader2, Search, Trash2, File as FileIcon, Download, Share2 } from 'lucide-react'
 import { UploadButton } from '@/components/upload/UploadButton'
+import { CreateShareModal } from '@/components/share/CreateShareModal'
 
 export default function Cabinet() {
     const [files, setFiles] = useState<FileItem[]>([])
     const [loading, setLoading] = useState(true)
     const [search, setSearch] = useState('')
+    const [shareFileId, setShareFileId] = useState<string | null>(null)
 
     const fetchFiles = async () => {
         setLoading(true)
@@ -107,7 +109,7 @@ export default function Cabinet() {
                                             <Button size="icon" variant="ghost" title="Download" onClick={() => window.open(`${import.meta.env.VITE_API_URL || '/api'}/files/${file.id}/download`)}>
                                                 <Download className="h-4 w-4" />
                                             </Button>
-                                            <Button size="icon" variant="ghost" title="Share" onClick={() => alert("Share logic todo")}>
+                                            <Button size="icon" variant="ghost" title="Share" onClick={() => setShareFileId(file.id)}>
                                                 <Share2 className="h-4 w-4" />
                                             </Button>
                                             <Button size="icon" variant="ghost" title="Delete" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => handleDelete(file.id)}>
@@ -121,6 +123,14 @@ export default function Cabinet() {
                     </CardContent>
                 </Card>
             </div>
+
+            {/* Share Modal */}
+            {shareFileId && (
+                <CreateShareModal
+                    fileIds={[shareFileId]}
+                    onClose={() => setShareFileId(null)}
+                />
+            )}
         </DashboardLayout>
     )
 }
