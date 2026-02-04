@@ -1,12 +1,14 @@
 name: Docker Build and Publish
 
+# 临时禁用自动构建 - 等待前端项目完成
+# TODO: 在前端项目创建完成后重新启用
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*'
-  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
+  #   tags:
+  #     - 'v*'
+  workflow_dispatch:  # 仅保留手动触发
 
 env:
   REGISTRY: ghcr.io
