@@ -676,6 +676,137 @@ const useFileUpload = (onSuccess?: () => void) => {
 
 ---
 
+### 任务追踪与文档更新规范 ⭐⭐⭐
+
+> ⚠️ **核心原则**: 每次完成任务后**必须**立即更新 `DEVELOPMENT.md`，确保项目进度清晰可追踪！
+
+#### 📋 DEVELOPMENT.md 文档
+
+**文档位置**: `DEVELOPMENT.md`（项目根目录）
+
+**文档作用**:
+- 📊 追踪所有功能模块的开发进度
+- ✅ 标记任务完成状态
+- 🎯 明确下一步工作计划
+- 🐛 记录已知问题和技术债务
+- 📈 追踪测试覆盖率
+
+#### 🔄 每次完成任务后的必做步骤
+
+**步骤 1: 更新任务状态**
+
+在 `DEVELOPMENT.md` 中找到对应任务，将 `[ ]` 改为 `[x]`：
+
+```diff
+#### 1.8 API 路由与控制器 (api) - 🟡 50%
+
+- [x] `handlers/auth.go` - 认证接口
+- [x] `handlers/file.go` - 文件接口
+- [x] `handlers/share.go` - 分享接口
+- [ ] `handlers/upload.go` - 文件上传接口 (Tus 协议)
++ [x] `handlers/upload.go` - 文件上传接口 (Tus 协议) ← 新完成
+```
+
+**步骤 2: 更新进度百分比**
+
+更新模块标题中的进度百分比：
+
+```diff
+- #### 1.8 API 路由与控制器 (api) - 🟡 50%
++ #### 1.8 API 路由与控制器 (api) - 🟡 75%
+```
+
+**步骤 3: 更新测试覆盖率**
+
+如果编写了测试，运行测试并更新覆盖率数据：
+
+```bash
+# 后端测试
+cd server
+go test -cover ./...
+
+# 前端测试
+cd web
+npm run test:coverage
+```
+
+在 `DEVELOPMENT.md` 的"测试覆盖率追踪"章节更新数据：
+
+```diff
+| services | ~20% | ≥70% | ❌ 严重不足 |
++ | services | 72% | ≥70% | ✅ 达标 |
+```
+
+**步骤 4: 更新"更新日志"**
+
+在 `DEVELOPMENT.md` 底部的"更新日志"章节添加本次更新：
+
+```markdown
+### 2026-02-05 10:30
+- ✅ 完成 `handlers/upload.go` - Tus 上传接口实现
+- ✅ 完成 `handlers/download.go` - 文件下载接口实现
+- ✅ 添加 `handlers/upload_test.go` 测试
+- 📈 API Handlers 测试覆盖率: 0% → 65%
+```
+
+**步骤 5: 提交文档更新**
+
+```bash
+git add DEVELOPMENT.md
+git commit -m "docs: update development progress for upload/download handlers
+
+- Mark upload.go and download.go as completed
+- Update API handlers progress: 50% → 75%
+- Update test coverage: handlers 0% → 65%
+"
+```
+
+#### 🚨 严格要求
+
+- ✅ **每次代码提交前**，必须检查是否需要更新 `DEVELOPMENT.md`
+- ✅ **每次完成一个模块**，必须更新进度和测试覆盖率
+- ✅ **每次发现新问题**，必须添加到"已知问题"章节
+- ✅ **每次产生技术债务**，必须添加到"技术债务"章节
+- ✅ **每周五**，全面审查 `DEVELOPMENT.md` 准确性
+
+#### 📌 Claude 协作提醒
+
+**如果你是新开的 Claude 会话**:
+
+1. **第一件事**: 阅读 `DEVELOPMENT.md` 了解当前进度
+2. **第二件事**: 检查"下一步工作计划"确定优先级
+3. **第三件事**: 开始工作前，告知用户你看到的当前进度
+4. **完成工作后**: 严格按照上述步骤更新 `DEVELOPMENT.md`
+
+**示例对话**:
+
+```
+Claude: 我已阅读 DEVELOPMENT.md，当前进度：
+- 后端核心模块: 80% (大部分完成，缺少部分测试)
+- 前端应用: 0% (未开始)
+- 下一步优先任务: 补充后端测试覆盖率
+
+根据计划，我将开始补充 file_service_test.go。
+开始吗？
+```
+
+#### 🎯 文档更新检查清单
+
+每次提交代码前，使用此清单自查：
+
+- [ ] 是否完成了 `DEVELOPMENT.md` 中的某个任务？
+- [ ] 是否将 `[ ]` 改为 `[x]`？
+- [ ] 是否更新了模块进度百分比？
+- [ ] 是否运行了测试并更新覆盖率？
+- [ ] 是否在"更新日志"添加了本次更新？
+- [ ] 是否有新的问题需要记录？
+- [ ] 是否有技术债务需要记录？
+- [ ] 是否提交了 `DEVELOPMENT.md` 的更新？
+
+**✅ 全部完成后，才能认为任务真正完成！**
+
+---
+
 ### Git 提交规范
 
 采用 **Conventional Commits** 格式：
