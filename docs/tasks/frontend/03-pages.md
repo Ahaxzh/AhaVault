@@ -2,9 +2,9 @@
 
 **模块名称**: 前端页面开发
 **负责人**: Claude AI
-**最后更新**: 2026-02-04
-**当前进度**: 0%
-**状态**: ⚪ 未开始
+**最后更新**: 2026-02-05
+**当前进度**: 20%
+**状态**: 🟡 进行中
 
 ---
 
@@ -12,7 +12,7 @@
 
 ### 核心页面
 
-- [ ] `pages/Home.tsx` - 首页（取件码输入）
+- [x] `pages/Home.tsx` - 首页（取件码输入 - App.tsx）
 - [ ] `pages/Login.tsx` - 登录页
 - [ ] `pages/Register.tsx` - 注册页
 - [ ] `pages/Cabinet.tsx` - 我的文件柜
@@ -22,10 +22,10 @@
 
 ### API 服务层
 
-- [ ] `services/api.ts` - Axios 实例配置
+- [x] `services/api.ts` - Axios 实例配置
 - [ ] `services/authService.ts` - 认证 API
 - [ ] `services/fileService.ts` - 文件 API
-- [ ] `services/shareService.ts` - 分享 API
+- [x] `services/shareService.ts` - 分享 API
 - [ ] `services/uploadService.ts` - Tus 上传封装
 
 ### 自定义 Hooks

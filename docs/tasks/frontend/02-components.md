@@ -2,9 +2,9 @@
 
 **模块名称**: 前端组件开发
 **负责人**: Claude AI
-**最后更新**: 2026-02-04
-**当前进度**: 0%
-**状态**: ⚪ 未开始
+**最后更新**: 2026-02-05
+**当前进度**: 30%
+**状态**: 🟡 进行中
 
 ---
 
@@ -12,13 +12,13 @@
 
 ### 通用组件库
 
-- [ ] `components/common/Button.tsx` - 按钮组件
-- [ ] `components/common/Input.tsx` - 输入框组件
+- [x] `components/ui/Button.tsx` - 按钮组件
+- [x] `components/ui/Input.tsx` - 输入框组件
 - [ ] `components/common/Modal.tsx` - 模态框组件
 - [ ] `components/common/Toast.tsx` - 消息提示组件
 - [ ] `components/common/Progress.tsx` - 进度条组件
 - [ ] `components/common/Loading.tsx` - 加载状态组件
-- [ ] `components/common/Card.tsx` - 卡片组件
+- [x] `components/ui/Card.tsx` - 卡片组件
 - [ ] `components/common/Table.tsx` - 表格组件
 
 ### 上传模块
