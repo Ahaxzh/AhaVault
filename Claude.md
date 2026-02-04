@@ -890,6 +890,55 @@ git push origin feature/add-captcha-verification
 
 ---
 
+## 🚀 新 Claude 会话快速启动指南
+
+> ⚠️ **重要**: 当你开启新的 Claude Code 会话时，请遵循此指南确保无缝衔接！
+
+### 🎯 启动新会话的标准流程
+
+**你只需复制粘贴以下消息给新 Claude 会话**：
+
+```
+请先阅读以下文档了解项目状态：
+1. docs/knowledge/INDEX.md
+2. docs/memory-bank/progress.md
+
+然后告诉我：
+- 当前项目进度
+- 下一步优先级任务
+- 是否有阻塞问题
+```
+
+### ✅ 新 Claude 会话应该做什么
+
+1. **主动读取关键文档**
+   - `docs/knowledge/INDEX.md` - 了解文档结构（50 行）
+   - `docs/memory-bank/progress.md` - 了解当前进度（100 行）
+
+2. **主动汇报状态**
+   ```
+   我已阅读进度文档，当前项目：
+   - 整体进度: 40%
+   - 后端核心: 80% (进行中)
+   - 下一步优先级任务: 补充后端测试 (P0)
+
+   根据任务文档，我将开始补充 file_service_test.go。
+   是否开始？
+   ```
+
+3. **遵循所有协作规范**
+   - 代码注释头规范
+   - 测试覆盖率要求
+   - 文档更新流程
+   - Conventional Commits
+
+### 📚 详细指南
+
+完整的新会话启动指南: [docs/guides/new-session-guide.md](docs/guides/new-session-guide.md)
+快速参考卡: [docs/knowledge/quick-reference.md](docs/knowledge/quick-reference.md)
+
+---
+
 ## 📝 文档维护协作规范
 
 > ⚠️ **核心原则**: 所有重要设计、约定、使用方式都必须沉淀为 Markdown 文档，避免知识只存在于代码或对话中。
