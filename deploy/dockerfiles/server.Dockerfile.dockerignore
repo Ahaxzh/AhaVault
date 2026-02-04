@@ -1,0 +1,10 @@
+# Dockerfile build context exclusions
+bin/
+.git/
+.github/
+.vscode/
+*.md
+*.log
+.env*
+!.env.example
+vendor/
