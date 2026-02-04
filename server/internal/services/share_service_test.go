@@ -234,7 +234,7 @@ func TestGetShareByCode(t *testing.T) {
 
 	// 创建已过期的分享
 	expiredShare := &models.ShareSession{
-		PickupCode:       "EXPIRED2",
+		PickupCode:       "EXPRED23", // 不包含 O/I 的有效取件码
 		CreatorID:        user.ID,
 		MaxDownloads:     10,
 		CurrentDownloads: 0,
@@ -244,7 +244,7 @@ func TestGetShareByCode(t *testing.T) {
 
 	// 创建下载次数已达上限的分享
 	exhaustedShare := &models.ShareSession{
-		PickupCode:       "EXHAUST2",
+		PickupCode:       "EXHAUST3", // 不包含 O/I 的有效取件码
 		CreatorID:        user.ID,
 		MaxDownloads:     5,
 		CurrentDownloads: 5,

@@ -9,6 +9,7 @@ package database
 import (
 	"context"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -153,7 +154,11 @@ func TestInitPostgreSQLError(t *testing.T) {
 
 	err := InitPostgreSQL(invalidCfg)
 	assert.Error(t, err, "Should fail with invalid config")
-	assert.Contains(t, err.Error(), "failed to connect to database", "Error should mention connection failure")
+	// 错误消息可能是 "failed to connect to database" 或 "failed to ping database"
+	assert.True(t,
+		strings.Contains(err.Error(), "failed to connect") ||
+		strings.Contains(err.Error(), "failed to ping"),
+		"Error should mention connection/ping failure, got: %v", err)
 }
 
 // TestCloseDatabase 测试关闭数据库连接
