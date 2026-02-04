@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import App from './App'
+import Home from './Home'
 
-import { ThemeProvider } from './providers/ThemeProvider'
-import { shareService } from './services/shareService'
+import { ThemeProvider } from '../providers/ThemeProvider'
+import { shareService } from '../services/shareService'
 
 // Mock dependencies
 vi.mock('react-i18next', () => ({
@@ -15,13 +15,13 @@ vi.mock('react-i18next', () => ({
     }),
 }))
 
-vi.mock('./services/shareService', () => ({
+vi.mock('../services/shareService', () => ({
     shareService: {
         getShareByCode: vi.fn(),
     },
 }))
 
-describe('App - Pickup Flow', () => {
+describe('Home - Pickup Flow', () => {
 
     beforeEach(() => {
         vi.clearAllMocks()
@@ -30,7 +30,7 @@ describe('App - Pickup Flow', () => {
     it('renders landing page correctly', () => {
         render(
             <ThemeProvider>
-                <App />
+                <Home />
             </ThemeProvider>
         )
         expect(screen.getByText('home.title')).toBeInTheDocument()
@@ -53,7 +53,7 @@ describe('App - Pickup Flow', () => {
 
         render(
             <ThemeProvider>
-                <App />
+                <Home />
             </ThemeProvider>
         )
 
@@ -78,7 +78,7 @@ describe('App - Pickup Flow', () => {
     it('handles validation error (too short)', async () => {
         render(
             <ThemeProvider>
-                <App />
+                <Home />
             </ThemeProvider>
         )
 
