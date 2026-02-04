@@ -187,25 +187,34 @@
 
 ### Week 6 计划
 
-1. **前端项目初始化** (2 天)
-   - 初始化 Vite + React + TypeScript
-   - 配置 TailwindCSS
-   - 配置 Vitest + Playwright
-   - 创建基础组件库
+2. **首页与取件页** (2 天) - **进行中**
+   - [x] 创建 API Client & Services
+   - [x] 实现取件码输入与验证 UI
+   - [x] 实现取件结果页 Logic & UI
+   - [ ] 调试后端接口联调
+   - [ ] 实现文件下载功能
 
-2. **首页与取件页** (2 天)
-   - 首页取件码输入表单
-   - 取件结果展示页
-
-3. **登录注册页** (1 天)
-   - 登录页面
-   - 注册页面
+3. **登录注册页** (1 天) - **已完成**
+   - [x] 登录页面
+   - [x] 注册页面
+   - [x] 认证状态管理 (Zustand)
+   - [x] 路由配置 (React Router)
 
 详细计划: [progress/weekly/2026-W06.md](../progress/weekly/2026-W06.md)
 
 ---
 
 ## 🔄 最近更新
+
+### 2026-02-05 03:20 - 认证模块 (登录/注册) 完成 🔐
+- ✅ **认证服务**: 实现 `authService` 对接后端 API
+- ✅ **状态管理**: 使用 Zustand 管理 Token 和用户信息 persistence
+- ✅ **路由配置**: React Router 配置首页、登录、注册路由
+- ✅ **UI 实现**:
+  - 登录页面 (Email/Password)
+  - 注册页面 (含邀请码支持)
+  - 统一 AuthLayout 风格
+- 📊 **前端进度**: 20% → 40%
 
 ### 2026-02-05 02:45 - 前端基础架构完成 🎨
 - ✅ **项目初始化**: Vite + React + TypeScript + TailwindCSS v4
