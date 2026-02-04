@@ -1,0 +1,54 @@
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+vendor/
+server/ahavault
+
+# Frontend
+node_modules/
+dist/
+build/
+.vite/
+*.local
+
+# Environment
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+docker-compose.override.yml
+
+# Storage
+/data/storage/
+/data/temp/
+
+# Misc
+.tmp/
+tmp/
