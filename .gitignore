@@ -28,6 +28,7 @@ build/
 *.swp
 *.swo
 *~
+.claude/skills/*
 
 # OS
 .DS_Store
