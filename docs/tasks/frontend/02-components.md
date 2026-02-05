@@ -3,7 +3,7 @@
 **模块名称**: 前端组件开发
 **负责人**: Claude AI
 **最后更新**: 2026-02-05
-**当前进度**: 30%
+**当前进度**: 65%
 **状态**: 🟡 进行中
 
 ---
@@ -23,8 +23,8 @@
 
 ### 上传模块
 
-- [ ] `components/upload/UploadButton.tsx` - 上传按钮
-- [ ] `components/upload/UploadProgress.tsx` - 上传进度
+- [x] `components/upload/UploadButton.tsx` - 上传按钮 ✅ (2026-02-05)
+- [x] `components/upload/UploadProgress.tsx` - 上传进度（内置于 UploadButton）
 - [ ] `components/upload/DragDropZone.tsx` - 拖拽上传
 - [ ] `components/upload/FilePreview.tsx` - 文件预览
 
@@ -36,10 +36,10 @@
 
 ### 分享模块
 
-- [ ] `components/share/ShareModal.tsx` - 创建分享模态框
-- [ ] `components/share/ShareConfig.tsx` - 分享配置表单
-- [ ] `components/share/ShareLink.tsx` - 分享链接展示
-- [ ] `components/share/PickupForm.tsx` - 取件码输入
+- [x] `components/share/CreateShareModal.tsx` - 创建分享模态框 ✅ (2026-02-05)
+- [x] `components/share/ShareConfig.tsx` - 分享配置表单（内置于 CreateShareModal）
+- [x] `components/share/ShareLink.tsx` - 分享链接展示（内置于 CreateShareModal）
+- [x] `components/share/PickupForm.tsx` - 取件码输入（在 Home.tsx 中实现）
 - [ ] `components/share/PickupResult.tsx` - 取件结果展示
 
 ---

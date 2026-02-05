@@ -47,13 +47,15 @@
   - `src/assets/` - 静态资源
   - `src/styles/` - 全局样式
 
-- [ ] 配置路由 (React Router v6)
+- [x] 配置路由 (React Router v6)
   - 优先级: P0
   - 安装: `npm install react-router-dom`
+  - ✅ 已完成 (2026-02-05)
 
-- [ ] 配置状态管理 (Zustand)
+- [x] 配置状态管理 (Zustand)
   - 优先级: P1
   - 安装: `npm install zustand`
+  - ✅ 已完成 (2026-02-05)
 
 ---
 
