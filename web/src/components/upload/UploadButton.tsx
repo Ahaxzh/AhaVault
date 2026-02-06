@@ -1,3 +1,18 @@
+/**
+ * @file UploadButton.tsx
+ * @description 文件上传按钮组件
+ *
+ * 功能说明：
+ *  - 支持通过点击选择文件上传
+ *  - 实时显示上传进度（进度条）
+ *  - 支持断点续传（基于 Tus 协议）
+ *  - 支持取消上传
+ *  - 上传完成后触发回调
+ *
+ * @author AhaVault Team
+ * @created 2026-02-05
+ */
+
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
 import { uploadService } from '@/services/uploadService';
@@ -5,6 +20,7 @@ import { Loader2, Plus, UploadCloud, X } from 'lucide-react';
 import * as tus from 'tus-js-client';
 
 interface UploadButtonProps {
+    /** 上传完成后的回调函数 */
     onUploadComplete?: () => void;
 }
 

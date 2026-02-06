@@ -1,3 +1,18 @@
+/**
+ * @file CreateShareModal.tsx
+ * @description 创建分享链接模态框组件
+ *
+ * 功能说明：
+ *  - 配置分享过期时间（1小时/24小时/7天）
+ *  - 配置最大下载次数（1/5/10/100次）
+ *  - 可选设置访问密码
+ *  - 展示生成的取件码
+ *  - 支持一键复制取件码
+ *
+ * @author AhaVault Team
+ * @created 2026-02-05
+ */
+
 import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -6,8 +21,11 @@ import { shareService } from '@/services/shareService'
 import { Loader2, X, Copy, Check } from 'lucide-react'
 
 interface CreateShareModalProps {
+    /** 要分享的文件 ID 列表 */
     fileIds: string[]
+    /** 关闭模态框回调 */
     onClose: () => void
+    /** 分享创建成功回调 */
     onSuccess?: () => void
 }
 

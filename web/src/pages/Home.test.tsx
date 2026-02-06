@@ -1,5 +1,20 @@
+/**
+ * @file Home.test.tsx
+ * @description 首页（取件页）单元测试
+ *
+ * 测试场景：
+ *  - 页面正确渲染
+ *  - 取件码输入与验证
+ *  - 成功取件流程
+ *  - 错误处理（验证失败、网络错误）
+ *
+ * @author AhaVault Team
+ * @created 2026-02-05
+ */
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { BrowserRouter } from 'react-router-dom'
 import Home from './Home'
 
 import { ThemeProvider } from '../providers/ThemeProvider'
@@ -21,6 +36,19 @@ vi.mock('../services/shareService', () => ({
     },
 }))
 
+/**
+ * 测试辅助函数：渲染 Home 组件并提供必要的上下文
+ */
+const renderHome = () => {
+    return render(
+        <BrowserRouter>
+            <ThemeProvider>
+                <Home />
+            </ThemeProvider>
+        </BrowserRouter>
+    )
+}
+
 describe('Home - Pickup Flow', () => {
 
     beforeEach(() => {
@@ -28,13 +56,17 @@ describe('Home - Pickup Flow', () => {
     })
 
     it('renders landing page correctly', () => {
-        render(
-            <ThemeProvider>
-                <Home />
-            </ThemeProvider>
-        )
-        expect(screen.getByText('home.title')).toBeInTheDocument()
+        renderHome()
+
+        // Check main title
+        expect(screen.getByText('Your Data,')).toBeInTheDocument()
+        expect(screen.getByText('Truly Secure.')).toBeInTheDocument()
+
+        // Check pickup code input
         expect(screen.getByPlaceholderText('AHA-XXXX-XXXX')).toBeInTheDocument()
+
+        // Check retrieve button (use role for precision)
+        expect(screen.getByRole('button', { name: /Retrieve File/i })).toBeInTheDocument()
     })
 
     it('handles successful pickup', async () => {
@@ -51,41 +83,33 @@ describe('Home - Pickup Flow', () => {
         // Setup mock
         vi.mocked(shareService.getShareByCode).mockResolvedValue(mockData as any)
 
-        render(
-            <ThemeProvider>
-                <Home />
-            </ThemeProvider>
-        )
+        renderHome()
 
         // Type code
         const input = screen.getByPlaceholderText('AHA-XXXX-XXXX')
         fireEvent.change(input, { target: { value: 'ABCDEF12' } })
 
-        // Click button
-        const button = screen.getByText('home.pickup_button')
+        // Click button (use role for precision)
+        const button = screen.getByRole('button', { name: /Retrieve File/i })
         fireEvent.click(button)
 
         // Check loading state
-        expect(screen.getByText('Fetching...')).toBeInTheDocument()
+        expect(screen.getByText('Verifying...')).toBeInTheDocument()
 
         // Wait for result
         await waitFor(() => {
-            expect(screen.getByText('Files Ready for Pickup')).toBeInTheDocument()
+            expect(screen.getByText('File Found')).toBeInTheDocument()
             expect(screen.getByText('test.png')).toBeInTheDocument()
         })
     })
 
     it('handles validation error (too short)', async () => {
-        render(
-            <ThemeProvider>
-                <Home />
-            </ThemeProvider>
-        )
+        renderHome()
 
         const input = screen.getByPlaceholderText('AHA-XXXX-XXXX')
         fireEvent.change(input, { target: { value: 'SHORT' } })
 
-        const button = screen.getByText('home.pickup_button')
+        const button = screen.getByRole('button', { name: /Retrieve File/i })
         fireEvent.click(button)
 
         expect(screen.getByText('Please enter a valid 8-digit code')).toBeInTheDocument()
