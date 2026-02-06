@@ -7,6 +7,7 @@ import (
 	"ahavault/server/internal/api"
 	"ahavault/server/internal/config"
 	"ahavault/server/internal/database"
+	"ahavault/server/internal/models"
 	"ahavault/server/internal/services"
 	"ahavault/server/internal/storage"
 	"github.com/gin-gonic/gin"
@@ -27,6 +28,37 @@ func main() {
 	// 连接数据库
 	if err := database.InitPostgreSQL(cfg); err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
+	}
+	
+	// 自动迁移数据库
+	log.Println("Starting database migration...")
+	
+	// DROP VIEW specifically to allow GORM to alter column types
+	log.Println("Dropping legacy views...")
+	if err := database.DB.Exec("DROP VIEW IF EXISTS user_storage_stats CASCADE").Error; err != nil {
+		log.Printf("Warning: Failed to drop view user_storage_stats: %v", err)
+	}
+	if err := database.DB.Exec("DROP VIEW IF EXISTS active_shares CASCADE").Error; err != nil {
+		log.Printf("Warning: Failed to drop view active_shares: %v", err)
+	}
+
+	// Fix schema drift: Drop 'password' column if it exists
+	log.Println("Fixing schema drift: Dropping 'password' column...")
+	if err := database.DB.Exec("ALTER TABLE users DROP COLUMN IF EXISTS password").Error; err != nil {
+		log.Printf("Warning: Failed to drop password column: %v", err)
+	}
+
+	if err := database.DB.AutoMigrate(
+		&models.User{},
+		&models.FileMetadata{},
+		&models.FileBlob{},
+		&models.ShareSession{},
+		&models.ShareFile{},
+		&models.UploadSession{},
+		&models.AuditLog{},
+		&models.SystemSetting{},
+	); err != nil {
+		log.Fatalf("Failed to migrate database: %v", err)
 	}
 
 	// 连接 Redis
