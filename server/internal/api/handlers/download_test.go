@@ -138,9 +138,6 @@ func TestDownloadByPickupCode(t *testing.T) {
 
 // TestDownloadWithRange 测试 Range 下载
 func TestDownloadWithRange(t *testing.T) {
-	_, router, _, _, share, cleanup := setupDownloadTestEnv(t)
-	defer cleanup()
-
 	tests := []struct {
 		name           string
 		rangeHeader    string
@@ -171,6 +168,10 @@ func TestDownloadWithRange(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// 每个子测试创建独立的测试环境，避免内存数据库状态问题
+			_, router, _, _, share, cleanup := setupDownloadTestEnv(t)
+			defer cleanup()
+
 			req, err := http.NewRequest(http.MethodGet, "/api/download/"+share.PickupCode, nil)
 			require.NoError(t, err)
 
