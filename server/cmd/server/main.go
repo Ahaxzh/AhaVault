@@ -10,6 +10,7 @@ import (
 	"ahavault/server/internal/models"
 	"ahavault/server/internal/services"
 	"ahavault/server/internal/storage"
+	"ahavault/server/internal/tasks"
 	"github.com/gin-gonic/gin"
 )
 
@@ -83,6 +84,15 @@ func main() {
 	userService := services.NewUserService(database.DB, cfg.Crypto.JWTSecret)
 	fileService := services.NewFileService(database.DB, storageEngine, cfg.Crypto.MasterKey)
 	shareService := services.NewShareService(database.DB, fileService)
+
+	// 启动后台任务调度器
+	scheduler := tasks.NewScheduler(database.DB, storageEngine)
+	if err := scheduler.Start(); err != nil {
+		log.Printf("Warning: Failed to start background scheduler: %v", err)
+	} else {
+		log.Println("Background task scheduler started successfully")
+	}
+	defer scheduler.Stop()
 
 	// 创建 Gin 路由
 	router := gin.Default()
