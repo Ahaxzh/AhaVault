@@ -1,6 +1,6 @@
 # 📊 AhaVault 开发进度
 
-**最后更新**: 2026-02-06 15:35
+**最后更新**: 2026-02-06 16:15
 **更新人**: Claude AI
 **整体进度**: 78%
 
@@ -133,9 +133,10 @@
 
 ### 🟡 已知问题 (非阻塞)
 
-1. 中间件测试待补充 - 计划本周完成 (P2)
-2. 后台任务未实现 - 下周开始 (P2)
-3. 前端测试失败 - Home.test.tsx 缺少 Router 上下文，需补充 MemoryRouter 包装器 (P1)
+1. 中间件测试待补充 - 计划本周完成 (P2) ✅ **已完成 (75.7% 覆盖率)**
+2. 后台任务未实现 - 下周开始 (P2) ✅ **已完成 (gc.go + lifecycle.go + scheduler.go)**
+3. ~~前端测试失败 - Home.test.tsx 缺少 Router 上下文，需补充 MemoryRouter 包装器 (P1)~~ ✅ **已修复**
+4. Vitest 配置需排除 e2e 目录 - Playwright 测试文件与 Vitest 冲突 (P1)
 
 详细问题追踪: [memory-bank/known-issues.md](./known-issues.md)
 
