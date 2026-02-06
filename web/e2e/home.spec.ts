@@ -43,7 +43,7 @@ test.describe('Home Page', () => {
 
   test('should navigate to login page', async ({ page }) => {
     // 点击登录链接
-    await page.getByRole('link', { name: /Login/i }).click();
+    await page.getByRole('button', { name: /Sign In/i }).click();
 
     // 验证跳转到登录页
     await expect(page).toHaveURL(/.*login/);
@@ -51,7 +51,7 @@ test.describe('Home Page', () => {
 
   test('should navigate to register page', async ({ page }) => {
     // 点击注册链接
-    await page.getByRole('link', { name: /Register/i }).click();
+    await page.getByRole('button', { name: /Get Started/i }).click();
 
     // 验证跳转到注册页
     await expect(page).toHaveURL(/.*register/);
