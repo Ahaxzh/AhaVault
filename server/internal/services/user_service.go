@@ -72,13 +72,24 @@ func (s *UserService) Register(req *RegisterRequest, requireInviteCode bool, val
 		return nil, fmt.Errorf("failed to hash password: %w", err)
 	}
 
-	// 创建用户
+	// Determine role (First user is Admin)
+	var totalUsers int64
+	if err := s.db.Model(&models.User{}).Count(&totalUsers).Error; err != nil {
+		return nil, fmt.Errorf("failed to count users: %w", err)
+	}
+
+	role := models.RoleUser
+	if totalUsers == 0 {
+		role = models.RoleAdmin
+	}
+
+	// Create User
 	user := &models.User{
 		Email:        req.Email,
 		Password:     string(passwordHash),
-		Role:         models.RoleUser,
+		Role:         role,
 		Status:       models.StatusActive,
-		StorageQuota: 10 * 1024 * 1024 * 1024, // 默认 10GB
+		StorageQuota: 10 * 1024 * 1024 * 1024, // Default 10GB
 		StorageUsed:  0,
 	}
 

@@ -71,6 +71,12 @@ func SetupRoutes(
 				shares.POST("/:code/save", shareHandler.SaveToVault)
 				shares.DELETE("/:id", shareHandler.StopShare)
 			}
+
+			// Tus Upload Routes
+			tusHandler := handlers.NewTusHandler(fileService, "./tmp/tus_uploads")
+			// We handle both base path and wildcards for Tus protocol (POST, HEAD, PATCH, OPTIONS, DELETE)
+			authenticated.Any("/tus/upload", tusHandler.GinHandler)
+			authenticated.Any("/tus/upload/*any", tusHandler.GinHandler)
 		}
 	}
 

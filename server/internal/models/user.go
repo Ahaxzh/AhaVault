@@ -11,7 +11,7 @@ import (
 type User struct {
 	ID       uuid.UUID `gorm:"type:uuid;primary_key;default:gen_random_uuid()" json:"id"`
 	Email    string    `gorm:"type:varchar(255);uniqueIndex;not null" json:"email"`
-	Password string    `gorm:"type:varchar(255);not null" json:"-"` // JSON 中不返回密码
+	Password string    `gorm:"column:password_hash;type:varchar(255);not null" json:"-"` // JSON 中不返回密码
 	Role     string    `gorm:"type:varchar(50);not null;default:'user'" json:"role"`
 	Status   string    `gorm:"type:varchar(50);not null;default:'active'" json:"status"`
 
